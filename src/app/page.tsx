@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div>페이지 11</div>;
+  return <div>페이지 수정</div>;
 }
