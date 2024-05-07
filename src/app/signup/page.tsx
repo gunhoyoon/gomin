@@ -2,7 +2,7 @@
 import { registerUser } from "@/utils/firebase-config";
 import React, { ChangeEventHandler, useState } from "react";
 
-function SignUpPage() {
+export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -50,5 +50,3 @@ function SignUpPage() {
     </div>
   );
 }
-
-export default SignUpPage;

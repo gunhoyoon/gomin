@@ -1,3 +1,9 @@
+"use client";
+import { useAuth } from "../context/AuthContext";
+
 export default function Home() {
-  return <div>제발 ..dassdadada.</div>;
+  const { userType, setUserType } = useAuth();
+  // console.log("userType", userType === "");
+  console.log("userType", userType);
+  return <div>제발 ..{userType}</div>;
 }
