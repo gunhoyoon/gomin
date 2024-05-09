@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./_component/header/Header";
 import { AuthProvider } from "../context/AuthContext";
-
+const fs = require("fs");
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,6 +16,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log(
+    "process.env.GOOGLE_APPLICATION_CREDENTIALS",
+    process.env.GOOGLE_APPLICATION_CREDENTIALS
+  );
+  const a = fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS, "utf8");
+  console.log("asdasdasdas", a);
+
   return (
     <html lang="en">
       <body className={inter.className}>

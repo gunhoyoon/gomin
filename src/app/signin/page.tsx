@@ -8,32 +8,33 @@ export default function Signin() {
 
   const handleLogin: ChangeEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-
     try {
       const userCredential = await loginUser(email, password);
       if (userCredential) {
         const user = userCredential.user;
         console.log(user.uid); // 사용자 UID 출력
 
-        // ID 토큰 가져오기 및 서버로 전송
+        // ID 토큰 가져오기 및 쿠키에 저장
         const idToken = await user.getIdToken();
         console.log("idToken", idToken);
-        // idToken이 이미 있는데 이걸 서버에 굳이 보내서 해야되냐 결국 next middle ware에서 처리하려고 한건데..
-        fetch("/api/setToken", {
-          method: "POST",
+        document.cookie = `idToken=${idToken};max-age=3600;path=/;`;
+
+        // 사용자 정보를 서버에서 조회
+        fetch(`/api/users?uid=${user.uid}`, {
+          method: "GET",
           headers: {
+            Authorization: `Bearer ${idToken}`, // 토큰을 사용하여 인증
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ idToken }),
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log("Token set in server", data);
+            console.log("User data retrieved:", data);
             // 로그인 성공 후 페이지 리디렉션
             // window.location.href = "/dashboard";
           })
           .catch((error) => {
-            console.error("Error setting token in server:", error);
+            console.error("Error fetching user data:", error);
           });
       }
     } catch (error) {
