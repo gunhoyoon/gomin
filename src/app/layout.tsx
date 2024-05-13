@@ -16,13 +16,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log(
-    "process.env.GOOGLE_APPLICATION_CREDENTIALS",
-    process.env.GOOGLE_APPLICATION_CREDENTIALS
-  );
-  const a = fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS, "utf8");
-  console.log("asdasdasdas", a);
-
   return (
     <html lang="en">
       <body className={inter.className}>

@@ -202,3 +202,4 @@ if (typeof window !== "undefined") {
   const analytics = getAnalytics(app);
 }
 //사용자 앱 패턴 분석하는데 사용
+export default app;
