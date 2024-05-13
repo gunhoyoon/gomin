@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: Props) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [auth]);
 
   return (
     <AuthContext.Provider value={{ user, isAdmin }}>
