@@ -1,21 +1,21 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
-import { logout } from "@/utils/firebase-config";
-
-// import { useAuth } from "../context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { user, isAdmin } = useAuth();
+  const router = useRouter();
   console.log(user, isAdmin);
-
+  if (isAdmin) {
+    router.push("/admin");
+  }
   // const { userType, setUserType } = useAuth();
   // console.log("userType", userType === "");
   // console.log("userType", userType);
   return (
     <>
-      <div>제발 ..</div>
-      <button onClick={logout}>로그아웃</button>
+      <div>이 부분이 메인이 될거고 리스트 ? 가 생길거임</div>
     </>
   );
 }

@@ -1,0 +1,38 @@
+.headerContainer {
+  background-color: #fff;
+}
+
+.headerInner {
+  width: 1100px;
+  height: 80px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logoContainer img {
+  display: inline-block;
+  width: 100%;
+}
+.signContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.logoutButton {
+  padding: 6px 10px;
+  margin: 0;
+  font-size: 16px;
+  color: white;
+  /* color: black; */
+  background-color: #ff4b5c;
+  /* background-color: white; */
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* 호버 효과 */
+.logoutButton:hover {
+  background-color: #ff6b7a;
+}

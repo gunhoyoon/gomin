@@ -1,0 +1,65 @@
+/* signin.module.css */
+
+.container {
+  display: flex;
+  justify-content: center;
+
+  height: 100vh;
+  background-color: #fdf6e4;
+  font-family: Arial, sans-serif;
+}
+
+.fieldset {
+  border: 2px solid #ff7f50;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #fff7e6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 300px;
+  width: 351px;
+  margin-top: 150px;
+}
+
+.legend {
+  font-size: 1.5em;
+  color: #ff7f50;
+  padding: 0 10px;
+}
+
+.label {
+  display: block;
+  margin-top: 10px;
+  color: #ff7f50;
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ff7f50;
+  border-radius: 5px;
+  background-color: #fff7e6;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #ff4500;
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff7f50;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #ff4500;
+}

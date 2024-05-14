@@ -2,6 +2,7 @@
 import { loginUser } from "@/utils/firebase-config";
 import { useRouter } from "next/navigation";
 import React, { ChangeEventHandler, useState } from "react";
+import styles from "./signin.module.css";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -71,25 +72,33 @@ export default function Signin() {
   };
 
   return (
-    <div>
-      <fieldset>
-        <legend>로그인하기</legend>
+    <div className={styles.container}>
+      <fieldset className={styles.fieldset}>
+        <legend className={styles.legend}>Sign In</legend>
         <form action="submit" onSubmit={handleLogin}>
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" onChange={handleEmail} />
-          <label htmlFor="password">Password</label>
-          <input type="password" name="password" onChange={handlePassword} />
-          <button type="submit">로그인</button>
+          <label htmlFor="email" className={styles.label}>
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            onChange={handleEmail}
+            className={styles.input}
+          />
+          <label htmlFor="password" className={styles.label}>
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            onChange={handlePassword}
+            className={styles.input}
+          />
+          <button type="submit" className={styles.button}>
+            로그인
+          </button>
         </form>
       </fieldset>
-
-      <div>
-        {/* {userType === "admin"
-          ? "관리자 등장"
-          : userType === "user"
-          ? "유저 등장"
-          : "비로그인 등장"} */}
-      </div>
     </div>
   );
 }

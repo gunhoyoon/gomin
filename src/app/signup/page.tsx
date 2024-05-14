@@ -1,7 +1,7 @@
 "use client";
 import { registerUser } from "@/utils/firebase-config";
 import React, { ChangeEventHandler, useState } from "react";
-
+import styles from "./signup.module.css";
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,28 +25,38 @@ export default function SignUpPage() {
   };
 
   return (
-    <div>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Register</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </form>
+    <div className={styles.container}>
+      <fieldset className={styles.fieldset}>
+        <legend className={styles.legend}>Sign Up</legend>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email" className={styles.label}>
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={styles.input}
+            required
+          />
+          <label htmlFor="password" className={styles.label}>
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={styles.input}
+            required
+          />
+          <button type="submit" className={styles.button}>
+            Register
+          </button>
+          {error && <p className={styles.error}>{error}</p>}
+        </form>
+      </fieldset>
     </div>
   );
 }
