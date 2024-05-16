@@ -7,9 +7,7 @@ export default function Home() {
   const { user, isAdmin } = useAuth();
   const router = useRouter();
   console.log(user, isAdmin);
-  if (isAdmin) {
-    router.push("/admin");
-  }
+
   // const { userType, setUserType } = useAuth();
   // console.log("userType", userType === "");
   // console.log("userType", userType);

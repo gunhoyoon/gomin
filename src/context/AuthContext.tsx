@@ -8,10 +8,12 @@ import app from "@/utils/firebase-config";
 interface AuthContextType {
   user: User | null;
   isAdmin: boolean;
+  isLoading: boolean;
 }
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isAdmin: false,
+  isLoading: false,
 });
 
 type Props = {
@@ -21,6 +23,7 @@ type Props = {
 export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const auth = getAuth(app); // 이미 초기화된 Firebase 앱에서 Auth 인스턴스 가져오기
   // 이 부분은 firebase-config.ts (클라이언트 측 초기화 한 부분의 app을 가지고 있어야하고 이 부분은 공용으로 사용하기 때문에 import해서 사용)
 
@@ -34,13 +37,14 @@ export const AuthProvider = ({ children }: Props) => {
         setUser(null);
         setIsAdmin(false);
       }
+      setIsLoading(false);
     });
 
     return () => unsubscribe();
   }, [auth]);
 
   return (
-    <AuthContext.Provider value={{ user, isAdmin }}>
+    <AuthContext.Provider value={{ isLoading, user, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

@@ -29,33 +29,8 @@ export const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
-// export const registerUser = async (
-//   email: string,
-//   password: string,
-//   additionalInfo
-// ) => {
-//   try {
-//     const userCredential = await createUserWithEmailAndPassword(
-//       auth,
-//       email,
-//       password
-//     );
-//     const user = userCredential.user;
+export const db = getFirestore(app);
 
-//     // 사용자의 추가 정보를 Firestore에 저장
-//     await setDoc(doc(db, "users", user.uid), {
-//       email: user.email,
-//       ...additionalInfo, // 예: 이름, 주소 등
-//     });
-
-//     console.log("User created and data saved:", user);
-//     return user;
-//   } catch (error) {
-//     console.error("Registration and data saving error:", error);
-//     throw error;
-//   }
-// };
 export const registerUser = async (email: string, password: string) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -70,73 +45,7 @@ export const registerUser = async (email: string, password: string) => {
     throw error;
   }
 };
-// const setupAuthPersistence = async () => {
-//   try {
-//     await setPersistence(auth, browserLocalPersistence);
-//     console.log("Persistence set to local storage");
-//   } catch (error) {
-//     console.error("Setting persistence failed:", error);
-//   }
-// };
 
-// // 사용자 로그인 함수
-// export const loginUser = async (email: string, password: string) => {
-//   try {
-//     // 로컬 스토리지에 로그인 상태 저장 설정 적용
-//     await setupAuthPersistence();
-
-//     // 이메일과 비밀번호를 사용하여 로그인 시도
-//     const userCredential = await signInWithEmailAndPassword(
-//       auth,
-//       email,
-//       password
-//     );
-//     console.log("User logged in:", userCredential.user);
-//   } catch (error) {
-//     console.error("Login error:", error);
-//   }
-// };
-// export const loginUser = async (email: string, password: string) => {
-//   try {
-//     const userCredential = await signInWithEmailAndPassword(
-//       auth,
-//       email,
-//       password
-//     );
-//     console.log("User logged in:", userCredential.user);
-//   } catch (error) {
-//     console.error("Login error:", error);
-//   }
-// };
-// export const loginUser = async (email: string, password: string) => {
-//   try {
-//     const userCredential = await signInWithEmailAndPassword(
-//       auth,
-//       email,
-//       password
-//     );
-//     const user = userCredential.user;
-
-//     // 사용자의 이메일을 기반으로 Firestore에서 해당 사용자의 추가 정보를 가져옵니다.
-//     const userDocRef = doc(db, "users", user.uid);
-//     const userDocSnapshot = await getDoc(userDocRef);
-
-//     // 사용자의 추가 정보가 Firestore에 없으면 새 문서를 생성합니다.
-//     if (!userDocSnapshot.exists()) {
-//       await setDoc(userDocRef, { isAdmin: false }); // isAdmin을 기본값으로 설정합니다.
-//       console.log("New user record created, isAdmin set to false");
-//     }
-
-//     // 사용자 문서에서 isAdmin 값을 다시 가져옵니다.
-//     const updatedUserDocSnapshot = await getDoc(userDocRef);
-//     const isAdmin = updatedUserDocSnapshot.data()?.isAdmin;
-
-//     console.log("User logged in:", user);
-//     console.log("isAdmin:", isAdmin);
-//   } catch (error) {
-//     console.error("Login error:", error);
-//   }
-// };
 export const loginUser = async (
   email: string,
   password: string
@@ -154,37 +63,6 @@ export const loginUser = async (
     return null;
   }
 };
-// export const loginUser = async (email: string, password: string) => {
-//   try {
-//     const userCredential = await signInWithEmailAndPassword(
-//       auth,
-//       email,
-//       password
-//     );
-//     const user = userCredential.user;
-
-//     // 사용자의 이메일을 기반으로 Firestore에서 해당 사용자의 추가 정보를 가져옵니다.
-//     const userDocRef = doc(db, "users", user.uid);
-//     const userDocSnapshot = await getDoc(userDocRef);
-
-//     // 사용자가 관리자인 경우에만 isAdmin 필드를 추가 또는 업데이트합니다.
-//     if (user.uid === process.env.NEXT_PUBLIC_FIREBASE_ADMIN_UID) {
-//       await setDoc(userDocRef, { isAdmin: true }, { merge: true });
-//       console.log("Admin privileges granted.");
-//     }
-
-//     if (!userDocSnapshot.exists()) {
-//       await setDoc(userDocRef, { isAdmin: false }); // 기본적으로 isAdmin을 false로 설정합니다.
-//       console.log("New user record created, isAdmin set to false");
-//     }
-
-//     const isAdmin = userDocSnapshot.data()?.isAdmin;
-//     console.log("User logged in:", user);
-//     console.log("isAdmin:", isAdmin);
-//   } catch (error) {
-//     console.error("Login error:", error);
-//   }
-// };
 
 export const logout = async () => {
   try {

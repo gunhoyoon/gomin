@@ -18,6 +18,7 @@ export default function Header() {
             </Link>
           </h1>
         </div>
+        {isAdmin && <Link href={"/admin"}>Admin으로 이동</Link>}
         <div className={styles.signContainer}>
           {user ? (
             <p>{user.email} 님 안녕하세요</p>

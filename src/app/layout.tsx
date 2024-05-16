@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./_component/header/Header";
 import { AuthProvider } from "../context/AuthContext";
+import RQProvider from "./_component/RQProvider";
 const fs = require("fs");
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>
-          <Header />
-          {children}
-        </AuthProvider>
+        <RQProvider>
+          <AuthProvider>
+            <Header />
+            {children}
+          </AuthProvider>
+        </RQProvider>
       </body>
     </html>
   );
