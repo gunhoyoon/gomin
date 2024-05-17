@@ -7,3 +7,4 @@ export const fireAdmin = admin.apps[0]
         process.env.GOOGLE_APPLICATION_CREDENTIALS as string
       ),
     });
+// 이걸 뮤테이트로 해서 성공하면 브라우저 업데이트

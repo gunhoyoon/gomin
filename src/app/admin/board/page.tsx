@@ -3,15 +3,20 @@ import React from "react";
 
 type Props = {
   searchParams: {
-    id: string;
+    jobId: string;
   };
 };
 
-export default function AdminBoard({ searchParams: { id } }: Props) {
-  console.log(id);
+export default function AdminBoard({ searchParams: { jobId } }: Props) {
+  console.log(jobId);
 
   // searchParams 이걸로 get요청
-  return <div>AdminBoard / 아마 사용은 안할듯</div>;
+  return (
+    <div>
+      AdminBoard / 아마 사용은 안할듯
+      {jobId}
+    </div>
+  );
 }
 
 // 이 부분에서 쿼리를 받아서 보여줘야함

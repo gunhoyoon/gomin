@@ -1,40 +1,84 @@
-"use client";
-import { fetchJobs } from "@/app/_util/jobsData";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import React, { ChangeEventHandler, useEffect, useState } from "react";
+import React, { ChangeEventHandler, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Job } from "@/model/Job";
 import Link from "next/link";
+import { fetchJobs } from "@/app/_util/jobsData";
 
 export default function ListContainer() {
-  const [addJobs, setAddJobs] = useState("");
-  const { data: JobsData } = useQuery<Job[], Object, Job[]>({
+  const [jobData, setJobData] = useState<Job>({ name: "", type: "" });
+  const queryClient = useQueryClient();
+  const { data: JobsData } = useQuery<Job[]>({
     queryKey: ["jobs"],
     queryFn: fetchJobs,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    staleTime: 60000, // 60 seconds
+    gcTime: 300000, // 5 minutes
   });
 
-  // const mutate = useMutation()
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (job: Job) => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(job),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    },
+    onSuccess: (data) => {
+      console.log("data", data);
+
+      queryClient.invalidateQueries({ queryKey: ["jobs"] }); // 즉각 업데이트ㅏㄲ지 완료
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   const onAddJobs: ChangeEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    if (jobData) {
+      mutate(jobData);
+    }
   };
+
   const handleData: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setAddJobs(e.target.value);
+    const { name, value } = e.target;
+    setJobData((prev) => ({ ...prev, [name]: value }));
   };
+
   return (
     <div>
       <form onSubmit={onAddJobs}>
-        <label htmlFor="">직업 추가하기</label>
-        <input type="text" onChange={handleData} />
+        <label htmlFor="jobName">직업 이름:</label>
+        <input
+          id="jobName"
+          type="text"
+          name="name"
+          value={jobData.name}
+          onChange={handleData}
+        />
+        <label htmlFor="jobType">직업 타입:</label>
+        <input
+          id="jobType"
+          type="text"
+          name="type"
+          value={jobData.type}
+          onChange={handleData}
+        />
+        <button type="submit">추가하기</button>
       </form>
       <ul>
         {JobsData &&
-          JobsData.map(({ id, name }) => (
-            <li>
-              <Link key={id} href={`/admin/board?id=${id}`}>
-                {name}
-              </Link>
+          JobsData.map((job) => (
+            <li key={job.id}>
+              <Link href={`/admin/board?jobId=${job.type}`}>{job.name}</Link>
             </li>
           ))}
       </ul>
