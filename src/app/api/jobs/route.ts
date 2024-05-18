@@ -1,7 +1,13 @@
 import { db } from "@/utils/firebase-config";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 import { NextRequest } from "next/server";
-import { v4 as uuid } from "uuid";
+
 export async function GET() {
   try {
     console.log("찌르긴함?");
@@ -46,6 +52,32 @@ export async function POST(request: NextRequest) {
     console.error("Error fetching jobs", error);
     return new Response(JSON.stringify("에러"), {
       status: 500,
+    });
+  }
+}
+export async function DELETE(request: NextRequest) {
+  const id = new URL(request.url).searchParams.get("id");
+
+  try {
+    // 'jobs' 컬렉션에서 ID에 해당하는 문서를 찾아 삭제
+    const jobsCol = collection(db, "jobs");
+
+    const docRef = doc(jobsCol, id as string);
+    await deleteDoc(docRef);
+
+    return new Response(JSON.stringify({ message: "성공" }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (err) {
+    console.error("Error deleting job", err);
+    return new Response(JSON.stringify({ message: "에러" }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   }
 }

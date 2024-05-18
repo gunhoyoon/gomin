@@ -22,9 +22,11 @@ export default function AdminPage() {
   if (isLoading) {
     return <div>Loading...</div>; // 로딩 중일 때 표시할 컴포넌트
   }
+  // 사실 이 부분에서 상태를 관리안하면, 굳이 client로 만들 필요도 없음.
+  // 리다이렉션 하는거 자체는 서버와 상관없이 브라우저에서만 시키면 되기 때문에, user는 어드민에 절대 접근을 못하게 하는거 그뿐인데.
   return (
     <div>
-      관리자 권한으로 로그인하셨습니다.
+      {/* 관리자 권한으로 로그인하셨습니다. */}
       <ListContainer />
     </div>
   );

@@ -1,12 +1,12 @@
-import React, { ChangeEventHandler, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+"use client";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Job } from "@/model/Job";
-import Link from "next/link";
 import { fetchJobs } from "@/app/_util/jobsData";
+import AddJobs from "./AddJobs";
+import JobsList from "./JobsList";
 
 export default function ListContainer() {
-  const [jobData, setJobData] = useState<Job>({ name: "", type: "" });
-  const queryClient = useQueryClient();
   const { data: JobsData } = useQuery<Job[]>({
     queryKey: ["jobs"],
     queryFn: fetchJobs,
@@ -14,77 +14,14 @@ export default function ListContainer() {
     gcTime: 300000, // 5 minutes
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (job: Job) => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/jobs`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(job),
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    },
-    onSuccess: (data) => {
-      console.log("data", data);
-
-      queryClient.invalidateQueries({ queryKey: ["jobs"] }); // 즉각 업데이트ㅏㄲ지 완료
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
-  const onAddJobs: ChangeEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    if (jobData) {
-      mutate(jobData);
-    }
-  };
-
-  const handleData: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { name, value } = e.target;
-    setJobData((prev) => ({ ...prev, [name]: value }));
-  };
-
   return (
     <div>
-      <form onSubmit={onAddJobs}>
-        <label htmlFor="jobName">직업 이름:</label>
-        <input
-          id="jobName"
-          type="text"
-          name="name"
-          value={jobData.name}
-          onChange={handleData}
-        />
-        <label htmlFor="jobType">직업 타입:</label>
-        <input
-          id="jobType"
-          type="text"
-          name="type"
-          value={jobData.type}
-          onChange={handleData}
-        />
-        <button type="submit">추가하기</button>
-      </form>
-      <ul>
-        {JobsData &&
-          JobsData.map((job) => (
-            <li key={job.id}>
-              <Link href={`/admin/board?jobId=${job.type}`}>{job.name}</Link>
-            </li>
-          ))}
-      </ul>
+      <AddJobs />
+      <JobsList JobsData={JobsData} />
     </div>
   );
 }
+// 컨테이너 부분에서 데이터를 다 가지고 있는건 맞지만 이건 그냥 장소만 제공을 한다. 일까지 하게 하고 싶진 않음 클라이언트로 하는건
 
 // 글 리스트가 나오고 결국 컨테이너에서 관련 데이터를 다 들고 있어야됨
 // 아 근데 그 전에 직업에 관련된 데이터를 가져와야함

@@ -7,14 +7,13 @@ type Props = {
   };
 };
 
-export default function AdminBoard({ searchParams: { jobId } }: Props) {
-  console.log(jobId);
+export default function AdminBoard({ searchParams }: Props) {
+  console.log(searchParams);
 
-  // searchParams 이걸로 get요청
   return (
     <div>
       AdminBoard / 아마 사용은 안할듯
-      {jobId}
+      {/* {jobId} */}
     </div>
   );
 }
