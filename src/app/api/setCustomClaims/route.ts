@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 export async function POST(req: NextRequest) {
   const request = await req.json();
   const uid = request.uid;
-  //   console.log("first", request.uid);
+
   if (!isValidAdminUid(uid)) {
     return new Response(
       JSON.stringify({ message: "Unauthorized to set admin claims." }),

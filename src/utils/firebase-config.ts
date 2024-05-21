@@ -6,11 +6,9 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   signOut,
-  setPersistence,
-  browserLocalPersistence,
   UserCredential,
 } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
