@@ -7,7 +7,6 @@ import { logout } from "@/utils/firebase-config";
 export default function Header() {
   const { user, isAdmin } = useAuth();
 
-  console.log();
   return (
     <div className={styles.headerContainer}>
       <div className={styles.headerInner}>
