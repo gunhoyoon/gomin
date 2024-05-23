@@ -3,7 +3,8 @@ import { getBoardDetail } from "@/app/_util/getBoardDetail";
 import { Post } from "@/model/Post";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-
+import styles from "./board.module.css";
+import Link from "next/link";
 type Props = {
   searchParams: {
     jobId: string;
@@ -24,7 +25,32 @@ export default function AdminBoard({ searchParams }: Props) {
     gcTime: 300 * 1000,
   });
   console.log("data", postData);
-  return <div></div>;
+  return (
+    <div className={styles.boardContainer}>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th className={styles.header}>제목</th>
+            <th className={styles.header}>조회수</th>
+          </tr>
+        </thead>
+        <tbody>
+          {postData?.map(({ title, viewCount }, index) => (
+            <tr key={index}>
+              <td className={styles.cell}>{title}</td>
+              <td className={styles.cell}>{viewCount}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Link
+        className={styles.postButton}
+        href={`/admin/board/post?jobId=${searchParams.jobId}`}
+      >
+        글 작성
+      </Link>
+    </div>
+  );
 }
 // 이제 여기서 갈리는데 jobId 를 쿼리 스트링으로 넘겨주기 때문에 그 id를 가지고 get 요청을 해야됨.
 
